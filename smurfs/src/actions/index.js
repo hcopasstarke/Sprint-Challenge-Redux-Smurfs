@@ -25,18 +25,27 @@ export const getSmurfs = () => {
 
 	return function(dispatch) {
 		dispatch({ type: FETCHING_SMURF })
-		promise.then(response => {
-			console.log(response)
-			dispatch({ type: GET_SMURF, payload: response.data })
-		})
+		promise
+			.then(response => {
+				console.log(response)
+				dispatch({ type: GET_SMURF, payload: response.data })
+			})
+			.catch(error => {
+				console.log("The error is: ", error)
+			})
 	}
 }
 
 export const postSmurfs = smurfs => {
 	return function(dispatch) {
 		dispatch({ type: ADD_SMURF })
-		axios.post("http://localhost:3333/smurfs", smurfs).then(response => {
-			dispatch(getSmurfs())
-		})
+		axios
+			.post("http://localhost:3333/smurfs", smurfs)
+			.then(response => {
+				dispatch(getSmurfs())
+			})
+			.catch(error => {
+				console.log("The error is: ", error)
+			})
 	}
 }
